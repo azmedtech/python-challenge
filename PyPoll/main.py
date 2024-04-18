@@ -11,7 +11,7 @@ candidates={}
 winner=""
 winning_votes=0
 
-#read the election_data CSV file
+#load and read the election_data CSV file
 with open(election_data_csv) as file:
     csvreader=csv.reader(file,delimiter=",")
 
@@ -49,13 +49,22 @@ print(f"Total Votes:{total_votes}")
 print("----------------")
 
 for candidate, (percentage,votes) in results.items():
-    #print(f"{candidate}:  {percent}%, ({votes})")
+    #print results of analysis
     print(f"{candidate}: {percentage:.2%} ({votes})")
 
+#print results of analysis
 print("----------------")
 print(f"Winner: {winner}")
 
-
+##export the results to a text display file
+#with open(election_output, "w") as textfile:
+   # textfile.write("Election Results\n")
+   # textfile.write("----------------------------\n")
+   # textfile.write(f"Total Votes:{total_votes}\n")
+   # textfile.write("----------------------------\n")
+   # textfile.write(f"{candidate}: {percentage:.2%} ({votes})\n")
+   # textfile.write("----------------------------\n")
+   # textfile.write(f"Winner: {winner}\n")
     
 
 
