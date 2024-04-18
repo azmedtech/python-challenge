@@ -55,7 +55,15 @@ for candidate, (percentage,votes) in results.items():
 print("----------------")
 print(f"Winner: {winner}")
 
-
+#export the results to a text display file
+#with open('financial_analysis.txt', 'w') as textfile:
+   # textfile.write("Financial Analysis\n")
+   # textfile.write("----------------------------\n")
+   # textfile.write(f"Total Months: {total_months}\n")
+   # textfile.write(f"Total: ${total_pro_loss}\n")
+   # textfile.write(f"Average Change: ${average_change:.2f}\n")
+   # textfile.write(f"Greatest Increase in Profits: {greatest_increase[0]} (${greatest_increase[1]})\n")
+   # textfile.write(f"Greatest Decrease in Profits: {greatest_decrease[0]} (${greatest_decrease[1]})\n")
     
 
 
