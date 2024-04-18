@@ -1,73 +1,50 @@
-#import required modules 
-import os
 import csv
+import os
 
-#path to find election_data CSV file in nested Resources folder
-election_data_csv = os.path.join("Resources","election_data.csv")
+# Path to find budget_data CSV file in nested Resources folder
+budget_data_csv = os.path.join("Resources", "budget_data.csv")
 
-#define variables 
-total_votes = 0
-candidates={}
-winner=""
-winning_votes=0
+# Initialize variables
+total_months = 0
+net_total = 0
+prev_month_profit = 0
+monthly_changes = []
+greatest_increase = ["", 0]
+greatest_decrease = ["", float("inf")]
 
-#load and read the election_data CSV file
-with open(election_data_csv) as file:
-    csvreader=csv.reader(file,delimiter=",")
+# Load and read the CSV file
+with open(budget_data_csv) as file:
+    csvreader = csv.reader(file, delimiter=",")
+    header = next(csvreader)  # Skip the header row
 
-    #skip the header row
-    next(csvreader)
-
-    #evaluate each row in the CSV file
     for row in csvreader:
-        total_votes+=1
+        # Calculate total number of months and net total amount of profit/loss
+        total_months += 1
+        current_month_profit = int(row[1])
+        net_total += current_month_profit
 
-        #count the votes per candidate
-        if row[2] in candidates:
-             candidates[row[2]] += 1
-        else:
-             candidates[row[2]] = 1
+        # Calculate changes in profit/loss if previous month profit is initialized
+        if prev_month_profit != 0:
+            profit_change = current_month_profit - prev_month_profit
+            monthly_changes.append(profit_change)
 
-    #calculate percentage of votes per candidate
-    results={}
+            # Find greatest increase and decrease
+            if profit_change > greatest_increase[1]:
+                greatest_increase = [row[0], profit_change]
+            if profit_change < greatest_decrease[1]:
+                greatest_decrease = [row[0], profit_change]
 
-    winning_votes = candidates['Charles Casper Stockham']
+        # Update previous profit/loss for the next iteration
+        prev_month_profit = current_month_profit
 
-    for candidate, votes in candidates.items():
-        percent=votes/total_votes
-        results[candidate]=(percent, votes)
+# Calculate the average change in profit/loss
+average_change = sum(monthly_changes) / len(monthly_changes) if monthly_changes else 0
 
-        #identify the winner
-        if votes>winning_votes:
-            winning_votes=votes
-            winner=candidate
-
-#print resuls of analysis        
-print("Election Results")    
-print("----------------")
-print(f"Total Votes:{total_votes}")
-print("----------------")
-
-for candidate, (percentage,votes) in results.items():
-    #print results of analysis
-    print(f"{candidate}: {percentage:.2%} ({votes})")
-
-#print results of analysis
-print("----------------")
-print(f"Winner: {winner}")
-
-##export the results to a text display file
-#with open(election_output, "w") as textfile:
-   # textfile.write("Election Results\n")
-   # textfile.write("----------------------------\n")
-   # textfile.write(f"Total Votes:{total_votes}\n")
-   # textfile.write("----------------------------\n")
-   # textfile.write(f"{candidate}: {percentage:.2%} ({votes})\n")
-   # textfile.write("----------------------------\n")
-   # textfile.write(f"Winner: {winner}\n")
-    
-
-
-
-    
-
+# Print the analysis report
+print("Financial Analysis")
+print("----------------------------")
+print(f"Total Months: {total_months}")
+print(f"Total: ${net_total}")
+print(f"Average Change: ${average_change:.2f}")
+print(f"Greatest Increase in Profits: {greatest_increase[0]} (${greatest_increase[1]})")
+print(f"Greatest Decrease in Profits: {greatest_decrease[0]} (${greatest_decrease[1]})")
