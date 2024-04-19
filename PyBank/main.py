@@ -50,12 +50,20 @@ print(f"Average Change: ${average_change:.2f}")
 print(f"Greatest Increase in Profits: {greatest_increase[0]} (${greatest_increase[1]})")
 print(f"Greatest Decrease in Profits: {greatest_decrease[0]} (${greatest_decrease[1]})")
 
-##export the results to a text display file
-#with open(analysis_output, "w") as textfile:
-   # textfile.write("Financial Analysis\n")
-   # textfile.write("----------------------------\n")
-   # textfile.write(f"Total Months: {total_months}\n")
-   # textfile.write(f"Total: ${total_pro_loss}\n")
-   # textfile.write(f"Average Change: ${average_change:.2f}\n")
-   # textfile.write(f"Greatest Increase in Profits: {date_greatest_increase} (${greatest_increase})\n")
-   # textfile.write(f"Greatest Decrease in Profits: {date_greatest_decrease} (${greatest_decrease})\n")
+#export the results to a text display file
+output = (
+    f"\nFinancial Analysis\n"
+    f"--------------------\n"
+    f"Total Months: {total_months}\n"
+    f"Total: ${net_total}\n"
+    f"Average Change: ${average_change:.2f}\n"
+    f"Greatest Increase in Profits: {greatest_increase[0]} (${greatest_increase[1]})\n"
+    f"Greatest Decrease in Profits: {greatest_decrease[0]} (${greatest_decrease[1]})\n")
+
+print(output)
+
+analysis_output_file="Analysis/PyBankAnalysis.txt"
+
+with open(analysis_output_file, "w") as f:
+    f.write(output)
+ 

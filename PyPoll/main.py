@@ -31,8 +31,6 @@ with open(election_data_csv) as file:
     #calculate percentage of votes per candidate
     results={}
 
-    winning_votes = candidates['Charles Casper Stockham']
-
     for candidate, votes in candidates.items():
         percent=votes/total_votes
         results[candidate]=(percent, votes)
@@ -50,24 +48,21 @@ print("----------------")
 
 for candidate, (percentage,votes) in results.items():
     #print results of analysis
-    print(f"{candidate}: {percentage:.2%} ({votes})")
+    print(f"{candidate}: {percentage:.3%} ({votes})")
 
 #print results of analysis
 print("----------------")
 print(f"Winner: {winner}")
-
-##export the results to a text display file
-#with open(election_output, "w") as textfile:
-   # textfile.write("Election Results\n")
-   # textfile.write("----------------------------\n")
-   # textfile.write(f"Total Votes:{total_votes}\n")
-   # textfile.write("----------------------------\n")
-   # textfile.write(f"{candidate}: {percentage:.2%} ({votes})\n")
-   # textfile.write("----------------------------\n")
-   # textfile.write(f"Winner: {winner}\n")
-    
-
-
-
-    
-
+   
+#export the results to a text display file
+output_file = "Analysis/ElectionAnalysis.txt"
+with open(output_file, "w") as f:
+    f.write(f"Election Results\n")
+    f.write(f"----------------------------\n")
+    f.write(f"Total Votes: {total_votes}\n")
+    f.write(f"----------------------------\n")
+    for candidate, (percentage, votes) in results.items():
+        f.write(f"{candidate}: {percentage:.3f}% ({votes})\n")
+    f.write(f"----------------------------\n")
+    f.write(f"Winner: {winner}\n")
+    f.write(f"----------------------------\n")
